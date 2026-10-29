@@ -1,32 +1,48 @@
 #include <iostream>
-#include <limits>
+#include <sstream>
+#include <string>
 using namespace std;
-double add(double a, double b) { return a + b; }
-double subtract (double a, double b) { return ab;)
-double multiply (double a, double b) { return a b; }
-double divide(double a, double b) (
-}
-if (b== 0) return numeric limits<double>:: quiet_NaN();
-return ab;
-// Operation: 1,2,3,4/
-extern "C" double calculate(double a, double b, int operation) {
-if (operation 1) return add(a, b);
-if (operation 2) return subtract(a, b);
-if (operation 3) return multiply(a, b);
-if (operation 4) return divide(a, b);
-return numeric_limits<double>:: quiet_NaN();
-}
-#ifndef EMSCRIPTEN
+
 int main() {
-double a, b;
-int operation;
-cout << "First number: ";
-cin >> a
-cout << "Second number: ";
-cin >> b
-cout << "Operation (1+, 2, 3, 4):
-cin >> operation;
-cout << "Result:"<< calculate(a, b, operation) << endl;
-return 0;
+    string expression;
+    double a, b, result = 0;
+    char op;
+    cout << "Enter expression: ";
+    getline(cin, expression);
+    stringstream ss(expression);
+
+    if (!(ss >> a)) {
+        cout << "Invalid expression";
+        return 0;
+    }
+    while (ss >> op) {
+        if (!(ss >> b)) {
+            cout << "Invalid expression";
+            return 0;
+        }
+        if (op == '*') {
+            a = a * b;
+        }
+        else if (op == '/') {
+            if (b == 0) {
+                cout << "Cannot divide by zero";
+                return 0;
+            }
+            a = a / b;
+        }
+        else if (op == '+') {
+            result = result + a;
+            a = b;
+        }
+        else if (op == '-') {
+            result = result + a;
+            a = -b;
+        }
+        else {
+            cout << "Invalid operator";
+            return 0;
+        }
+    }
+    cout << "Result: " << result + a;
+    return 0;
 }
-#endif
